@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\MovimientoInventarioController;
 
 Route::get('/', function () {
@@ -21,6 +22,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('productos', ProductoController::class);
+    Route::resource('sucursales', SucursalController::class)->parameters([
+    'sucursales' => 'sucursal'
+    ]);
     Route::resource('inventarios', MovimientoInventarioController::class);
 });
 
