@@ -13,4 +13,17 @@ class Producto extends Model
         'stock_critico',
         'imagen',
     ];
+    
+    public function movimientos()
+    {
+        return $this->hasMany(MovimientoInventario::class);
+    }
+
+    public function getStockActualAttribute()
+    {
+        $entradas = $this->movimientos()->where('tipo', 'entrada')->sum('cantidad');
+        $salidas = $this->movimientos()->where('tipo', 'salida')->sum('cantidad');
+
+        return $entradas - $salidas;
+    }
 }
